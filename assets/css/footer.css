@@ -1,1 +1,85 @@
-/*# sourceMappingURL=footer.css.map */
+.footer {
+  width: 100%;
+  padding: 25px 10px;
+  background: var(--accent-primary);
+  color: var(--white);
+}
+
+.footer-container {
+  max-width: var(--content-box-width);
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.footer-copyrights {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+.footer-copyrights a {
+  color: var(--white);
+  transition: 0.2s ease;
+}
+.footer-copyrights a:hover {
+  color: var(--gray-500);
+}
+
+.footer-primary-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.footer-primary-col {
+  width: calc(25% - 12.5px);
+}
+
+.footer-logo-container {
+  max-width: 250px;
+  width: 100%;
+  display: block;
+}
+.footer-logo-container img {
+  width: 100%;
+  display: block;
+}
+
+.footer-anpc-bagdes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.footer-anpc-bagde {
+  max-width: 250px;
+  display: block;
+  width: 100%;
+}
+.footer-anpc-bagde img {
+  display: block;
+  width: 100%;
+}
+
+.footer-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+.footer-menu .menu-item a {
+  font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+.footer-menu .menu-item a:hover {
+  color: var(--gray-100);
+}/*# sourceMappingURL=footer.css.map */

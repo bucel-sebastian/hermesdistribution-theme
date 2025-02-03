@@ -3,6 +3,9 @@
 if (!defined('HERMES_TEMPLATE_DIR')) {
     define('HERMES_TEMPLATE_DIR', get_template_directory());
 }
+if (!defined('HERMES_TEMPLATE_DIR_URI')) {
+    define('HERMES_TEMPLATE_DIR_URI', get_template_directory_uri());
+}
 if (!defined('HERMES_FILE_PATH')) {
     define('HERMES_FILE_PATH', get_theme_file_path());
 }
