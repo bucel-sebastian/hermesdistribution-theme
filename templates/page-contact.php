@@ -1,9 +1,5 @@
 <?php
-
-
-
 ?>
-
 
 <div>
 
@@ -11,9 +7,13 @@
 
         <div class="contact-details-and-form-container">
             <div class="contact-details-box">
-                <h2>Contact</h2>
+                <h1>Contact</h1>
 
-                <div>
+                <p class="contact-details-text">
+                    Ai întrebări sau vrei să colaborezi cu noi? Echipa noastră este pregătită să îți ofere suport și informații despre produsele și serviciile noastre.
+                </p>
+
+                <div class="contact-schedule-container">
                     <h3>Program</h3>
                     <span>Luni - Vineri: 08:00 - 17:00</span>
                 </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="contact-form-box">
-                <form>
+                <form id="contact-form">
                     <div class="contact-form-content">
                         <div class="contact-form-inputs-row">
                             <div class="contact-form-input-container">

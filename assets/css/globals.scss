@@ -222,8 +222,14 @@ html {
     }
 
     .onsale {
-      display: none;
+      display: block;
       position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--danger);
+      color: var(--white);
+      padding: 3px 10px;
+      border-radius: 5px;
     }
 
     .woocommerce-loop-product__link {
@@ -403,6 +409,7 @@ html {
   display: flex;
   gap: 10px;
   align-items: center;
+  margin-bottom: 15px;
 
   a {
     font-weight: 600;
@@ -540,7 +547,20 @@ html {
 }
 
 .product-image-container {
+  position: relative;
   width: 50%;
+}
+
+.product-flash-sale {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  background: var(--danger);
+  color: var(--white);
+  padding: 3px 10px;
+  border-radius: 5px;
+  pointer-events: none;
 }
 
 .product-summary-container {
@@ -636,10 +656,16 @@ html {
   width: 45%;
 }
 
+.contact-details-text {
+  margin-top: 20px;
+  font-size: 22px;
+}
+
 .contact-details-container {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 20px;
 
   a {
     display: flex;
@@ -666,14 +692,14 @@ html {
 .contact-form-box {
   background: #f0f3f2;
   border-radius: 10px;
-  padding: 20px;
+  padding: 35px 30px;
   width: 55%;
 }
 
 .contact-form-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 .contact-form-input-container {
   width: 100%;
@@ -682,7 +708,13 @@ html {
   gap: 4px;
 
   input {
+    font-family: Roboto;
+    font-size: 16px;
+    outline: none;
     width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-300);
   }
 }
 
@@ -693,9 +725,16 @@ html {
   gap: 4px;
 
   textarea {
+    overflow: hidden;
+    font-family: Roboto;
+    font-size: 16px;
     width: 100%;
     height: 100px;
     resize: none;
+    outline: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-300);
   }
 }
 .contact-form-inputs-row {
@@ -710,9 +749,10 @@ html {
 
 .contact-form-submit-container {
   button {
+    font-size: 18px;
     color: var(--white);
     border-radius: 8px;
-    padding: 8px 20px;
+    padding: 8px 40px;
     background: var(--accent-primary);
     cursor: pointer;
     border: none;
@@ -729,6 +769,7 @@ html {
   border-radius: 10px;
   overflow: hidden;
   filter: grayscale(1);
+  margin-bottom: 30px;
 
   .contact-map {
     border: none;
@@ -738,4 +779,64 @@ html {
   }
 }
 
+.contact-schedule-container {
+  margin-top: 30px;
+
+  span {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
 // CONTACT - END
+
+// OFFER - START
+
+.offer-details-and-form-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 45px;
+}
+
+.offer-details-box {
+  width: 45%;
+}
+
+.offer-details-text-big {
+  font-size: 22px;
+}
+
+.offer-details-text {
+  margin-top: 30px;
+}
+
+.offer-contact-details-container {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  a {
+    display: flex;
+    justify-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: var(--black-primary);
+    transition: 0.2s ease;
+
+    &:hover {
+      color: var(--accent-secondary);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      path {
+        fill: var(--accent-secondary);
+      }
+    }
+  }
+}
+
+// OFFER - END

@@ -76,9 +76,9 @@ if (post_password_required()) {
             <div class="product-summary-container">
                 <?php
 
-                $terms = get_the_terms($product->get_id(), 'brand');
-                if ($terms && !is_wp_error($terms)) {
-                    foreach ($terms as $term) {
+                $termsBrand = get_the_terms($product->get_id(), 'brand');
+                if ($termsBrand && !is_wp_error($termsBrand)) {
+                    foreach ($termsBrand as $term) {
                         echo '<a href="' . esc_url(get_term_link($term)) . '" class="product-category">' . esc_html($term->name) . '</a>';
                     }
                 }
@@ -138,6 +138,54 @@ if (post_password_required()) {
         // woocommerce_output_product_data_tabs();
         // woocommerce_upsell_display();
         // woocommerce_output_related_products();
+        ?>
+
+        <?php
+
+        $termsCategory = wc_get_product_terms($product->get_id(), 'product_cat', ['fields' => 'id']);
+
+        echo json_encode($termsCategory);
+
+        if (!empty($termsCategory)) {
+            $args = [
+                'post_type' => 'product',
+                'posts_per_page' => 4, // Number of related products to display
+                'post__not_in' => array($product->get_id()), // Exclude the current product
+                'tax_query' => array(
+                    [
+                        'taxonomy' => 'product_cat',
+                        'field' => 'id',
+                        'terms' => $termsCategory,
+                    ],
+                ),
+            ];
+
+            $related_category_products = new WP_Query($args);
+
+            if ($related_category_products->have_posts()) {
+        ?>
+                <div>
+                    <div class="section-title-container">
+                        <h3>
+                            Produse populare
+                        </h3>
+                    </div>
+                    <div class="products-gallery-container">
+                        <ul>
+                            <?php
+                            while ($related_category_products->have_posts()) {
+                                $related_category_products->the_post();
+                                wc_get_template_part('content', 'product');
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+        <?php
+            }
+        }
+
+
         ?>
     </div>
 
