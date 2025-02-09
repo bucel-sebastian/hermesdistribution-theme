@@ -31,9 +31,6 @@
                             <?php
                             get_product_search_form();
                             ?>
-
-
-
                         </div>
                     </div>
                     <div class="header-shop-links-container">

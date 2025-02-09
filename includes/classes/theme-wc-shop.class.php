@@ -13,8 +13,9 @@ class HermesThemeWcShop
         add_action('widgets_init',  [$this, 'register_product_categories_filter_widget']);
 
         add_action('widgets_init', [$this, 'register_brand_filter_widget']);
-    }
 
+        add_filter('woocommerce_catalog_orderby', [$this, 'rename_catalog_orderby']);
+    }
 
     private function load_widgets()
     {
@@ -43,11 +44,11 @@ class HermesThemeWcShop
         $sidebars_widgets = get_option('sidebars_widgets');
 
         if (empty($sidebars_widgets['shop-filters'])) {
-            $widget_settings = get_option('widget_product_categories_filter', array());
+            $widget_settings = get_option('widget_product_categories_filter', []);
             $widget_settings[1] = array('title' => 'Categorie');
             update_option('widget_product_categories_filter', $widget_settings);
 
-            $widget_settings = get_option('widget_brand_filter', array());
+            $widget_settings = get_option('widget_brand_filter', []);
             $widget_settings[1] = array('title' => 'Brand');
             update_option('widget_brand_filter', $widget_settings);
 
@@ -67,5 +68,19 @@ class HermesThemeWcShop
         if (class_exists('Product_Brands_Filter_Widget')) {
             register_widget('Product_Brands_Filter_Widget');
         }
+    }
+
+    public function rename_catalog_orderby($orderby_options)
+    {
+        $orderby_options = [
+            'menu_order' => 'Sortare implicită',
+            'popularity' => 'Popularitate',
+            'rating'     => 'Recenzii',
+            'date'       => 'Dată publicării',
+            'price'      => 'Preț asc.',
+            'price-desc' => 'Preț desc.',
+        ];
+
+        return $orderby_options;
     }
 }

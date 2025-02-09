@@ -52,8 +52,10 @@ if (post_password_required()) {
                                 'class' => 'wp-post-image',
                                 'data-zoom-image' => wp_get_attachment_image_url($main_image_id, 'full')
                             ]);
-                            echo '<div class="woocommerce-product-gallery__image active">' . $main_image . '</div>';
+                        } else {
+                            $main_image = wc_placeholder_img('woocommerce_single');
                         }
+                        echo '<div class="woocommerce-product-gallery__image active">' . $main_image . '</div>';
 
                         // Gallery images
                         // if ($attachment_ids) {
@@ -144,7 +146,7 @@ if (post_password_required()) {
 
         $termsCategory = wc_get_product_terms($product->get_id(), 'product_cat', ['fields' => 'id']);
 
-        echo json_encode($termsCategory);
+        // echo json_encode($termsCategory);
 
         if (!empty($termsCategory)) {
             $args = [
