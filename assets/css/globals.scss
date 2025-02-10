@@ -76,6 +76,13 @@ html {
     font-size: 24px;
     color: var(--heading-color);
   }
+
+  .section-title-breakline {
+    margin-top: 10px;
+    width: 100px;
+    height: 3px;
+    background: var(--accent-primary);
+  }
 }
 .section-title-with-buttons {
   display: flex;
@@ -403,6 +410,11 @@ html {
   }
 }
 
+.product-page-content {
+  .products-gallery-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 // Homepage END
 
 .woocommerce-breadcrumb {
@@ -543,6 +555,90 @@ html {
   }
 }
 
+.product-meta {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-meta-row {
+  a {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--accent-primary);
+    transition: 0.2s ease;
+
+    &:hover {
+      color: var(--accent-secondary);
+    }
+  }
+}
+
+.product-shipping-notice {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+
+  svg {
+    width: 40px;
+
+    path {
+      fill: var(--accent-secondary);
+    }
+  }
+
+  p {
+    width: calc(100% - 60px);
+  }
+}
+
+.product-share-buttons {
+  margin-top: 20px;
+
+  h3 {
+    margin-bottom: 10px;
+  }
+}
+.products-share-buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  .product-share-button {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border-radius: 6px;
+    transition: 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      path {
+        fill: var(--light);
+      }
+    }
+  }
+}
+
+.product-how-to-order-container,
+.product-related-products-container {
+  margin-bottom: 45px;
+}
+
 .single_add_to_cart_button_container {
   margin-top: 8px;
   display: flex;
@@ -612,6 +708,7 @@ html {
   align-items: flex-start;
   justify-content: center;
   gap: 30px;
+  margin-bottom: 20px;
 }
 
 .product-image-container {
