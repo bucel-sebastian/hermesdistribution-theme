@@ -1,12 +1,14 @@
 <?php
 
-
 class HermesThemeSetup
 {
     private $menu_locations;
+    private HermesThemeDatabase $theme_db;
 
     public function __construct()
     {
+        $this->theme_db = new HermesThemeDatabase();
+
         $this->menu_locations = [
             'primary' => 'Primary Menu',
             'footer' => 'Footer Menu',
@@ -17,6 +19,8 @@ class HermesThemeSetup
         add_action('init', [$this, 'register_menus']);
 
         add_action('after_setup_theme', [$this, 'add_woocommerce_theme_support']);
+        add_action('after_switch_theme', [$this, 'theme_activation']);
+
         add_filter('woocommerce_enqueue_styles', '__return_false');
 
         add_action('wp_enqueue_scripts', [$this, 'enqueue_js'], 100);
@@ -77,5 +81,10 @@ class HermesThemeSetup
         wp_enqueue_style('woocommerce-layout');
         wp_enqueue_style('woocommerce-general');
         wp_enqueue_style('woocommerce-smallscreen');
+    }
+
+    public function theme_activation(): void
+    {
+        $this->theme_db->create_tables();
     }
 }

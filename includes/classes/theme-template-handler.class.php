@@ -56,7 +56,7 @@ class HermesThemeTemplateHandler
                     } else if (is_shop()) {
                         get_template_part('templates/woocommerce/page-shop');
                     }
-                    echo print_r($wp_query->get_queried_object());
+                    // echo print_r($wp_query->get_queried_object());
                 } else if ($post->post_parent === 0) {
                     get_template_part('templates/page-' . $post->post_name);
                 }

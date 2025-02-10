@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
   // Ascultăm evenimentul de submit al formularului
-  $(".contact-form-content form").on("submit", function (e) {
+  $("#contact-form").on("submit", function (e) {
     e.preventDefault(); // Prevenim comportamentul implicit de submit
 
     // Colectăm datele din formular
