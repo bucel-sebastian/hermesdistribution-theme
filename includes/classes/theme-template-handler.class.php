@@ -43,10 +43,8 @@ class HermesThemeTemplateHandler
                 <?php
                 if (is_woocommerce() || is_cart() || is_checkout() || is_account_page() || is_shop()) {
                     if (is_cart()) {
-                        echo "is cart";
                         get_template_part('templates/woocommerce/page-cart');
                     } else if (is_checkout()) {
-                        echo "is checkout";
                         get_template_part('templates/woocommerce/page-checkout');
                     } else if (is_account_page()) {
                         echo "is account";

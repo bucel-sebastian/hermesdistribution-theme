@@ -60,6 +60,7 @@ html {
 
 .page-main {
   padding: 20px 10px;
+  min-height: 100vh;
 }
 
 .section-title-container {
@@ -889,4 +890,197 @@ html {
 }
 .offer-contact-details-container a svg path {
   fill: var(--accent-secondary);
+}
+
+.cart-page-content-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.cart-page-cart-container {
+  padding: 20px 0px;
+  width: calc(100% - 380px);
+}
+.cart-page-cart-container .cart-actions-container {
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 100%;
+}
+.cart-page-cart-container .shop_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cart-page-cart-container .cart_item {
+  border-top: 1px solid var(--gray-400);
+  border-bottom: 1px solid var(--gray-400);
+}
+.cart-page-cart-container .cart_item td {
+  padding: 5px;
+}
+.cart-page-cart-container .product-thumbnail img {
+  height: 64px;
+  width: 64px;
+  object-fit: contain;
+}
+.cart-page-cart-container .product-subtotal {
+  text-align: right;
+  align-content: right;
+}
+.cart-page-cart-container .product-quantity,
+.cart-page-cart-container .product-price {
+  text-align: center;
+  align-content: center;
+}
+.cart-page-cart-container .product-quantity .input-text.qty {
+  width: 50px;
+  padding: 7px 0;
+  height: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--black-primary-hover);
+  text-align: center;
+}
+.cart-page-cart-container .product-name {
+  width: 55%;
+}
+.cart-page-cart-container .product-name .product-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.cart-page-cart-container .product-name a,
+.cart-page-cart-container .product-name p {
+  font-size: 18px;
+  font-family: Roboto;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--accent-primary);
+}
+.cart-page-cart-container .product-name a.remove,
+.cart-page-cart-container .product-name p.remove {
+  font-size: 14px;
+  color: var(--danger);
+}
+
+.update-cart-button {
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 16px;
+  display: block;
+  width: max-content;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: var(--black-primary);
+  color: var(--white);
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  padding: 8px 20px;
+  transition: 0.2s ease;
+}
+.update-cart-button:hover {
+  background: var(--black-primary-hover);
+}
+.update-cart-button:disabled {
+  background: var(--body-color);
+}
+.update-cart-button:disabled:hover {
+  background: var(--body-color);
+}
+
+.cart-page-cart-collaterals {
+  max-width: 350px;
+  width: 100%;
+  border: 1px solid var(--gray-500);
+  padding: 20px;
+  border-radius: 8px;
+  height: max-content;
+}
+
+.cart-collaterals-cart-totals {
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 10px 0 15px;
+}
+.cart-collaterals-cart-totals .shop_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cart-collaterals-cart-totals .shop_table tr {
+  border-bottom: 1px solid var(--gray-400);
+}
+.cart-collaterals-cart-totals .shop_table tr th {
+  text-align: left;
+  padding: 7px 0px 7px 10px;
+}
+.cart-collaterals-cart-totals .shop_table tr td {
+  text-align: right;
+  padding: 7px 10px 7px 0px;
+}
+.cart-collaterals-cart-totals .shop_table tr:last-of-type {
+  border-bottom: none;
+}
+
+.wc-proceed-to-checkout .checkout-button {
+  font-family: Roboto;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  background: var(--accent-primary);
+  color: var(--white);
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  padding: 8px 5px;
+  transition: 0.2s ease;
+}
+.wc-proceed-to-checkout .checkout-button:hover {
+  background: var(--accent-secondary);
+}
+
+.cart-collateral-promocode {
+  margin-top: 15px;
+}
+.cart-collateral-promocode h3 {
+  margin-bottom: 10px;
+}
+.cart-collateral-promocode .coupon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.cart-collateral-promocode .coupon input {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+  outline: none;
+  transition: 0.2s ease;
+}
+.cart-collateral-promocode .coupon input:focus {
+  border: 1px solid var(--gray-400);
+}
+.cart-collateral-promocode .coupon button {
+  font-family: Roboto;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  background: var(--gray-200);
+  color: var(--black-primary);
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  padding: 8px 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.cart-collateral-promocode .coupon button:hover {
+  background: var(--gray-300);
 }/*# sourceMappingURL=globals.css.map */

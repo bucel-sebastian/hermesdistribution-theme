@@ -27,7 +27,7 @@
   transition: 0.2s ease;
 }
 .footer-copyrights a:hover {
-  color: var(--gray-500);
+  color: var(--gray-200);
 }
 
 .footer-primary-row {
