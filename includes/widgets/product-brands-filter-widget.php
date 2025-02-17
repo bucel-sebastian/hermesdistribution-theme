@@ -13,25 +13,49 @@ class Product_Brands_Filter_Widget extends WP_Widget
 
     public function widget($args, $instance)
     {
-        echo $args['before_widget'];
-        if (! empty($instance['title'])) {
-            echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
+
+
+        $current_category_id = 0;
+        if (is_product_category()) {
+            $current_category = get_queried_object();
+            $current_category_id = $current_category->term_id;
         }
 
-        $brands = get_terms(array(
-            'taxonomy'   => 'brand',
-            'hide_empty' => true,
-        ));
+        if ($current_category_id) {
 
-        if (! empty($brands)) {
-            echo '<ul>';
-            foreach ($brands as $brand) {
-                echo '<li><a href="' . get_term_link($brand) . '">' . $brand->name . '</a></li>';
-            }
-            echo '</ul>';
+            $brands = get_terms(array(
+                'taxonomy'   => 'brand',
+                'hide_empty' => false,
+                'meta_query' => array(
+                    array(
+                        'key'     => 'product_cat',
+                        'value'   => $current_category_id,
+                        'compare' => 'LIKE',
+                    ),
+                ),
+            ));
+        } else {
+            // Get all brands
+            $brands = get_terms(array(
+                'taxonomy'   => 'brand',
+                'hide_empty' => false,
+            ));
         }
 
-        echo $args['after_widget'];
+        if (empty($brands)) return;
+
+        echo '<div class="shop-filter-widget-container">';
+
+        echo '<h3 class="filter-widget-title">Brand</h3>';
+
+        echo '<ul class="filter-widget-list">';
+        foreach ($brands as $brand) {
+            echo '<li class="filter-widget-list-item"><a href="' . get_term_link($brand) . '">' . $brand->name . '</a></li>';
+        }
+        echo '</ul>';
+
+
+        echo '</div>';
     }
 
     public function form($instance)

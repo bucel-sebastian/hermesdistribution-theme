@@ -43,10 +43,8 @@ class HermesThemeTemplateHandler
                 <?php
                 if (is_woocommerce() || is_cart() || is_checkout() || is_account_page() || is_shop()) {
                     if (is_cart()) {
-                        echo "is cart";
                         get_template_part('templates/woocommerce/page-cart');
                     } else if (is_checkout()) {
-                        echo "is checkout";
                         get_template_part('templates/woocommerce/page-checkout');
                     } else if (is_account_page()) {
                         echo "is account";
@@ -55,6 +53,8 @@ class HermesThemeTemplateHandler
                         get_template_part('templates/woocommerce/page-product');
                     } else if (is_shop()) {
                         get_template_part('templates/woocommerce/page-shop');
+                    } else if (is_product_category()) {
+                        get_template_part('templates/woocommerce/page-cateogry');
                     }
                     // echo print_r($wp_query->get_queried_object());
                 } else if ($post->post_parent === 0) {

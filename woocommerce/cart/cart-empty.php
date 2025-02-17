@@ -38,3 +38,33 @@ if (wc_get_page_id('shop') > 0) : ?>
 		</a>
 	</p>
 <?php endif; ?>
+
+<?php
+$cart_products = new WP_Query([
+	'post_type' => 'product',
+	'posts_per_page' => 5,
+	'orderby' => 'rand',
+]);
+
+if ($cart_products->have_posts()) {
+?>
+	<div class="cart-products-gallery">
+		<div class="section-title-container">
+			<h3>
+				V-ar putea interesa
+			</h3>
+		</div>
+		<div class="products-gallery-container">
+			<ul class="products-gallery-list">
+				<?php
+				while ($cart_products->have_posts()) {
+					$cart_products->the_post();
+					wc_get_template_part('content', 'product');
+				}
+				?>
+			</ul>
+		</div>
+	</div>
+<?php
+}
+?>

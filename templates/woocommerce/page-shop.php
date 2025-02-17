@@ -42,7 +42,7 @@ get_header(); ?>
                 // Display pagination
                 woocommerce_pagination();
             } else {
-                echo '<p>' . esc_html__('No products found', 'your-theme') . '</p>';
+                echo '<p>Nu a fost găsit niciun produs.</p>';
             }
             ?>
         </div>
