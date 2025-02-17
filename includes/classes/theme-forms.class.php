@@ -8,6 +8,9 @@ class HermesThemeForms
 
         add_action('wp_ajax_submit_contact_form', [$this, 'handle_contact_form_submission']);
         add_action('wp_ajax_nopriv_submit_contact_form', [$this, 'handle_contact_form_submission']);
+
+        add_action('wp_ajax_woocommerce_search_products', [$this, 'woocommerce_search_products']);
+        add_action('wp_ajax_nopriv_woocommerce_search_products', [$this, 'woocommerce_search_products']);
     }
 
     public function enqueue_contact_form_script()
@@ -75,5 +78,31 @@ class HermesThemeForms
         } else {
             wp_send_json_error('A apărut o eroare la salvarea mesajului.');
         }
+    }
+
+    public function woocommerce_search_products()
+    {
+        $search_query = sanitize_text_field($_POST['search_query']);
+        $args = array(
+            'post_type' => 'product',
+            'post_status' => 'publish',
+            's' => $search_query,
+            'posts_per_page' => 5
+        );
+
+        $query = new WP_Query($args);
+
+        if ($query->have_posts()) {
+            echo '<ul>';
+            while ($query->have_posts()) {
+                $query->the_post();
+                echo '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+            }
+            echo '</ul>';
+        } else {
+            echo '<p>No products found</p>';
+        }
+
+        wp_die();
     }
 }

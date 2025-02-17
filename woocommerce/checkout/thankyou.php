@@ -52,12 +52,14 @@ defined('ABSPATH') || exit;
 					<strong><?php echo $order->get_order_number(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 							?></strong>
 				</li>
+				<div class="woocommerce-thankyou-order-details-separator"></div>
 
 				<li class="woocommerce-order-overview__date date">
 					<?php esc_html_e('Date:', 'woocommerce'); ?>
 					<strong><?php echo wc_format_datetime($order->get_date_created()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 							?></strong>
 				</li>
+				<div class="woocommerce-thankyou-order-details-separator"></div>
 
 				<?php if (is_user_logged_in() && $order->get_user_id() === get_current_user_id() && $order->get_billing_email()) : ?>
 					<li class="woocommerce-order-overview__email email">
@@ -65,6 +67,7 @@ defined('ABSPATH') || exit;
 						<strong><?php echo $order->get_billing_email(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 								?></strong>
 					</li>
+					<div class="woocommerce-thankyou-order-details-separator"></div>
 				<?php endif; ?>
 
 				<li class="woocommerce-order-overview__total total">
@@ -74,6 +77,7 @@ defined('ABSPATH') || exit;
 				</li>
 
 				<?php if ($order->get_payment_method_title()) : ?>
+					<div class="woocommerce-thankyou-order-details-separator"></div>
 					<li class="woocommerce-order-overview__payment-method method">
 						<?php esc_html_e('Payment method:', 'woocommerce'); ?>
 						<strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong>
@@ -84,7 +88,8 @@ defined('ABSPATH') || exit;
 
 		<?php endif; ?>
 
-		<?php do_action('woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id()); ?>
+		<?php // do_action('woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id()); 
+		?>
 		<?php do_action('woocommerce_thankyou', $order->get_id()); ?>
 
 	<?php else : ?>

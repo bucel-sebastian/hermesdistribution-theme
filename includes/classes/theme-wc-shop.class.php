@@ -15,6 +15,8 @@ class HermesThemeWcShop
         add_action('widgets_init', [$this, 'register_brand_filter_widget']);
 
         add_filter('woocommerce_catalog_orderby', [$this, 'rename_catalog_orderby']);
+
+        add_filter('wc_empty_cart_message', [$this, 'empty_cart_message']);
     }
 
     private function load_widgets()
@@ -52,7 +54,7 @@ class HermesThemeWcShop
             $widget_settings[1] = array('title' => 'Brand');
             update_option('widget_brand_filter', $widget_settings);
 
-            $sidebars_widgets['shop-filters'] = array('product_categories_filter-1', 'brand_filter-1');
+            $sidebars_widgets['shop-filters'] = ['product_categories_filter-1', 'brand_filter-1'];
             update_option('sidebars_widgets', $sidebars_widgets);
         }
     }
@@ -82,5 +84,20 @@ class HermesThemeWcShop
         ];
 
         return $orderby_options;
+    }
+
+    public function empty_cart_message($message)
+    {
+        $icon_path = HERMES_TEMPLATE_DIR_URI . '/assets/img/empty-cart-icon.svg';
+        $message = "
+            <div class='empty-cart-message'>
+                <div class='empty-cart-icon'>
+                <img src='{$icon_path}' />
+                </div>
+                <h2>Coșul de cumpărături este gol!</h2>
+            </div>
+        ";
+
+        return $message;
     }
 }

@@ -15,25 +15,32 @@ class Product_Categories_Filter_Widget extends WP_Widget
 
     public function widget($args, $instance)
     {
-        if (! empty($instance['title'])) {
-            echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
+
+        $current_category_id = 0;
+        if (is_product_category()) {
+            $current_category = get_queried_object();
+            $current_category_id = $current_category->term_id;
         }
 
         $categories = get_terms(array(
             'taxonomy'   => 'product_cat',
             'hide_empty' => true,
-            'parent'     => 0, // Only top-level categories
+            'parent'     => $current_category_id ? $current_category_id : 0,
         ));
 
-        if (! empty($categories)) {
-            echo '<ul>';
-            foreach ($categories as $category) {
-                echo '<li><a href="' . get_term_link($category) . '">' . $category->name . '</a></li>';
-            }
-            echo '</ul>';
-        }
+        if (empty($categories)) return;
 
-        echo $args['after_widget'];
+        echo '<div class="shop-filter-widget-container">';
+
+        echo '<h3 class="filter-widget-title">Categorie</h3>';
+
+        echo '<ul class="filter-widget-list">';
+        foreach ($categories as $category) {
+            echo '<li class="filter-widget-list-item"><a href="' . get_term_link($category) . '">' . $category->name . '</a></li>';
+        }
+        echo '</ul>';
+
+        echo '</div>';
     }
 
     public function form($instance)

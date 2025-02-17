@@ -23,7 +23,7 @@ class HermesThemeSetup
 
         add_filter('woocommerce_enqueue_styles', '__return_false');
 
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_js'], 100);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_js']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_css']);
     }
 
@@ -48,6 +48,10 @@ class HermesThemeSetup
         wp_enqueue_script('jquery');
 
         wp_enqueue_script('cart_button', HERMES_FILE_URI . '/assets/js/cart-button.js', ['jquery']);
+        wp_enqueue_script('search_bar', HERMES_FILE_URI . '/assets/js/search-bar.js', ['jquery']);
+        wp_localize_script('search_bar', 'search_bar', [
+            'ajax_url' => admin_url('admin-ajax.php')
+        ]);
 
         // wp_enqueue_script('wc-add-to-cart');
         // wp_enqueue_script('woocommerce');

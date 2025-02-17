@@ -53,6 +53,8 @@ class HermesThemeTemplateHandler
                         get_template_part('templates/woocommerce/page-product');
                     } else if (is_shop()) {
                         get_template_part('templates/woocommerce/page-shop');
+                    } else if (is_product_category()) {
+                        get_template_part('templates/woocommerce/page-cateogry');
                     }
                     // echo print_r($wp_query->get_queried_object());
                 } else if ($post->post_parent === 0) {
