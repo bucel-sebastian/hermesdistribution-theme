@@ -81,6 +81,7 @@ class HermesThemeSetup
         wp_enqueue_style('global_styles', HERMES_FILE_URI . '/assets/css/globals.css', [], false);
         wp_enqueue_style('global_footer_styles', HERMES_FILE_URI . '/assets/css/footer.css', [], false);
         wp_enqueue_style('global_header_styles', HERMES_FILE_URI . '/assets/css/header.css', [], false);
+        wp_enqueue_style('global_media_queries_styles', HERMES_FILE_URI . '/assets/css/media-queries.css', [], false);
 
         wp_enqueue_style('woocommerce-layout');
         wp_enqueue_style('woocommerce-general');

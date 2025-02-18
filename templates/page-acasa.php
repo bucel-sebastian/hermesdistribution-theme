@@ -162,12 +162,22 @@
         const categoriesSlider = document.querySelector('.categories-slider-items');
         const categoriesItems = document.querySelectorAll('.categories-slider-item');
         const categoriesTotalItems = categoriesItems.length;
-        let categoriesItemsToShow = 6;
+        let categoriesItemsToShow = getCategoriesItemsToShow();
 
         let isDragging = false;
         let startPosX = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
+
+        function getCategoriesItemsToShow() {
+            if (window.innerWidth < 769) {
+                return 2;
+            } else if (window.innerWidth < 1025) {
+                return 4;
+            } else {
+                return 6;
+            }
+        }
 
         const updateSliderPosition = () => {
             categoriesSlider.style.transform = `translateX(calc((-100% / ${categoriesItemsToShow}) * ${categoryIndex}))`;
@@ -255,6 +265,12 @@
 
         // Initial update to set the correct state of the buttons
         updateSliderPosition();
+
+        $(window).resize(function() {
+            let categoriesItemsToShow = getCategoriesItemsToShow();
+            updateSliderPosition();
+
+        });
     });
 
     // document.addEventListener('DOMContentLoaded', function() {
