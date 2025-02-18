@@ -150,17 +150,11 @@ html {
   padding: 20px 10px;
 }
 
-.categories-slider-container {
-}
-.categories-slider {
-}
-
-.categories-slider-items {
-  display: flex;
-  gap: 10px;
-}
-
 .categories-slider-item {
+  flex: 0 0 calc(100% / 6); /* Show 6 cards on desktop */
+  box-sizing: border-box;
+  padding: 10px 5px;
+
   a {
     text-decoration: none;
     color: var(--black-primary);
@@ -780,12 +774,6 @@ html {
   transition: transform 0.5s ease-in-out;
 }
 
-.categories-slider-item {
-  flex: 0 0 calc(100% / 6); /* Show 6 cards on desktop */
-  box-sizing: border-box;
-  /* Removed padding */
-}
-
 .categories-slider-item-card {
   text-align: center;
 }
@@ -795,25 +783,6 @@ html {
   height: auto;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .categories-slider-item {
-    flex: 0 0 calc(100% / 4); /* Show 4 cards on tablets */
-  }
-}
-
-@media (max-width: 768px) {
-  .categories-slider-item {
-    flex: 0 0 calc(100% / 3); /* Show 3 cards on smaller tablets */
-  }
-}
-
-@media (max-width: 480px) {
-  .categories-slider-item {
-    flex: 0 0 calc(100% / 2); /* Show 2 cards on mobile */
-  }
-}
-
 /* Slider Controls */
 .slider-controls {
   gap: 10px;
@@ -821,30 +790,33 @@ html {
   display: flex;
   justify-content: space-between;
   pointer-events: none; /* Allow clicks to pass through to the slider */
+
+  button {
+    pointer-events: all; /* Enable clicks on buttons */
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: 0.3s ease;
+
+    &:hover {
+      background: var(--accent-secondary);
+    }
+    &:disabled {
+      opacity: 0.2;
+    }
+  }
 }
 
-.slider-controls button {
-  pointer-events: all; /* Enable clicks on buttons */
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: 0.3s ease;
-}
-
-.slider-controls button:hover {
-  background: var(--accent-secondary);
-}
-
-.filter-widget-title {
+.slider-controls button .filter-widget-title {
   margin-bottom: 6px;
 }
 

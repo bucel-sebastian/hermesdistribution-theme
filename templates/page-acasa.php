@@ -26,8 +26,8 @@
                 Categoriile noastre de produse
             </h3>
             <div class="slider-controls">
-                <button class="slider-controls-prev">&#10094;</button> <!-- Previous button -->
-                <button class="slider-controls-next">&#10095;</button> <!-- Next button -->
+                <button class="slider-controls-prev" id="categories-slider-control-prev">&#10094;</button> <!-- Previous button -->
+                <button class="slider-controls-next" id="categories-slider-control-next">&#10095;</button> <!-- Next button -->
             </div>
         </div>
         <div class="categories-slider-container">
@@ -157,100 +157,200 @@
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const slider = document.querySelector('.categories-slider-items');
-        const items = document.querySelectorAll('.categories-slider-item');
-        const totalItems = items.length;
-        let currentIndex = 0;
+    jQuery(document).ready(function($) {
+        let categoryIndex = 0;
+        const categoriesSlider = document.querySelector('.categories-slider-items');
+        const categoriesItems = document.querySelectorAll('.categories-slider-item');
+        const categoriesTotalItems = categoriesItems.length;
+        let categoriesItemsToShow = 6;
+
         let isDragging = false;
         let startPosX = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
-        const cardsToShow = 6; // Number of cards to show at once (desktop)
 
-        // Next and Previous Buttons
-        const nextButton = document.querySelector('.slider-controls .slider-controls-next');
-        const prevButton = document.querySelector('.slider-controls .slider-controls-prev');
+        const updateSliderPosition = () => {
+            categoriesSlider.style.transform = `translateX(calc((-100% / ${categoriesItemsToShow}) * ${categoryIndex}))`;
 
-        // Update slider position
-        function updateSliderPosition() {
-            const offset = -currentIndex * (100 / cardsToShow);
-            slider.style.transform = `translateX(${offset}%)`;
+            if (categoryIndex === 0) {
+                $("#categories-slider-control-prev").attr('disabled', true);
+                $("#categories-slider-control-next").attr('disabled', false);
+            } else if (categoryIndex >= categoriesTotalItems - categoriesItemsToShow) {
+                $("#categories-slider-control-prev").attr('disabled', false);
+                $("#categories-slider-control-next").attr('disabled', true);
+            } else {
+                $("#categories-slider-control-prev").attr('disabled', false);
+                $("#categories-slider-control-next").attr('disabled', false);
+            }
         }
 
-        // Move to next item
-        function moveToNextItem() {
-            if (currentIndex < totalItems - cardsToShow) {
-                currentIndex++;
+        const moveToNextItem = () => {
+            if (categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+                categoryIndex++;
                 updateSliderPosition();
             }
         }
 
-        // Move to previous item
-        function moveToPrevItem() {
-            if (currentIndex > 0) {
-                currentIndex--;
+        const moveToPrevItem = () => {
+            if (categoryIndex > 0) {
+                categoryIndex--;
                 updateSliderPosition();
             }
         }
 
-        // Auto-move slider
-        let autoSlideInterval = setInterval(moveToNextItem, 3000);
+        let categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
 
-        // Pause auto-slide on hover
-        slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-        slider.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
+        $("#categories-slider-control-prev").on('click', function(e) {
+            e.preventDefault();
+            clearInterval(categoriesAutoSlideInterval);
+            moveToPrevItem();
+            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+        });
+        $("#categories-slider-control-next").on('click', function(e) {
+            e.preventDefault();
+            clearInterval(categoriesAutoSlideInterval);
+            moveToNextItem();
+            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
         });
 
         // Touch and Drag Controls
-        slider.addEventListener('touchstart', (e) => {
+        categoriesSlider.addEventListener('touchstart', touchStart);
+        categoriesSlider.addEventListener('touchend', touchEnd);
+        categoriesSlider.addEventListener('touchmove', touchMove);
+
+        function touchStart(event) {
             isDragging = true;
-            startPosX = e.touches[0].clientX;
-            prevTranslate = -currentIndex * (100 / cardsToShow);
-        });
+            startPosX = event.touches[0].clientX;
+            prevTranslate = currentTranslate;
+            categoriesSlider.classList.add('grabbing');
+        }
 
-        slider.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                const currentPosX = e.touches[0].clientX;
-                const diffX = currentPosX - startPosX;
-                currentTranslate = prevTranslate + (diffX / slider.offsetWidth) * 100;
+        function touchEnd() {
+            isDragging = false;
+            categoriesSlider.classList.remove('grabbing');
+            clearInterval(categoriesAutoSlideInterval);
 
-                // Prevent dragging beyond the first or last card
-                const maxTranslate = 0;
-                const minTranslate = -((totalItems - cardsToShow) * (100 / cardsToShow));
-                currentTranslate = Math.min(maxTranslate, Math.max(minTranslate, currentTranslate));
+            const movedBy = currentTranslate - prevTranslate;
 
-                slider.style.transform = `translateX(${currentTranslate}%)`;
+            if (movedBy < -100 && categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+                categoryIndex++;
             }
-        });
 
-        slider.addEventListener('touchend', () => {
-            if (isDragging) {
-                isDragging = false;
-                const movedBy = currentTranslate - prevTranslate;
-
-                // Snap to the nearest card
-                if (movedBy < -10 && currentIndex < totalItems - cardsToShow) {
-                    currentIndex++;
-                } else if (movedBy > 10 && currentIndex > 0) {
-                    currentIndex--;
-                }
-
-                updateSliderPosition();
+            if (movedBy > 100 && categoryIndex > 0) {
+                categoryIndex--;
             }
-        });
 
-        // Click Controls
-        nextButton.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            moveToNextItem();
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
-        prevButton.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            moveToPrevItem();
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
+            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+
+            updateSliderPosition();
+        }
+
+        function touchMove(event) {
+            if (isDragging) {
+                const currentPosition = event.touches[0].clientX;
+                currentTranslate = prevTranslate + currentPosition - startPosX;
+                categoriesSlider.style.transform = `translateX(${currentTranslate}px)`;
+            }
+        }
+
+        // Initial update to set the correct state of the buttons
+        updateSliderPosition();
     });
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const slider = document.querySelector('.categories-slider-items');
+    //     const items = document.querySelectorAll('.categories-slider-item');
+    //     const totalItems = items.length;
+    //     let categoryIndex = 0;
+    // let isDragging = false;
+    // let startPosX = 0;
+    // let currentTranslate = 0;
+    // let prevTranslate = 0;
+    //     const categoriesItemsToShow = 6; // Number of cards to show at once (desktop)
+
+    //     // Next and Previous Buttons
+    //     const nextButton = document.querySelector('.slider-controls .slider-controls-next');
+    //     const prevButton = document.querySelector('.slider-controls .slider-controls-prev');
+
+    //     // Update slider position
+    //     function updateSliderPosition() {
+    //         const offset = -categoryIndex * (100 / categoriesItemsToShow);
+    //         slider.style.transform = `translateX(${offset}%)`;
+    //     }
+
+    //     // Move to next item
+    //     function moveToNextItem() {
+    //         if (categoryIndex < totalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     // Move to previous item
+    //     function moveToPrevItem() {
+    //         if (categoryIndex > 0) {
+    //             categoryIndex--;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     // Auto-move slider
+    //     let autoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //     // Pause auto-slide on hover
+    // slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    // slider.addEventListener('mouseleave', () => {
+    //     autoSlideInterval = setInterval(moveToNextItem, 3000);
+    // });
+
+    // // Touch and Drag Controls
+    // slider.addEventListener('touchstart', (e) => {
+    //     isDragging = true;
+    //     startPosX = e.touches[0].clientX;
+    //     prevTranslate = -categoryIndex * (100 / categoriesItemsToShow);
+    // });
+
+    // slider.addEventListener('touchmove', (e) => {
+    //     if (isDragging) {
+    //         const currentPosX = e.touches[0].clientX;
+    //         const diffX = currentPosX - startPosX;
+    //         currentTranslate = prevTranslate + (diffX / slider.offsetWidth) * 100;
+
+    //         // Prevent dragging beyond the first or last card
+    //         const maxTranslate = 0;
+    //         const minTranslate = -((totalItems - cardsToShow) * (100 / cardsToShow));
+    //         currentTranslate = Math.min(maxTranslate, Math.max(minTranslate, currentTranslate));
+
+    //         slider.style.transform = `translateX(${currentTranslate}%)`;
+    //     }
+    // });
+
+    // slider.addEventListener('touchend', () => {
+    //     if (isDragging) {
+    //         isDragging = false;
+    //         const movedBy = currentTranslate - prevTranslate;
+
+    //         // Snap to the nearest card
+    //         if (movedBy < -10 && categoryIndex < totalItems - cardsToShow) {
+    //             categoryIndex++;
+    //         } else if (movedBy > 10 && categoryIndex > 0) {
+    //             categoryIndex--;
+    //         }
+
+    //         updateSliderPosition();
+    //     }
+    // });
+
+    //     // Click Controls
+    //     nextButton.addEventListener('click', () => {
+    //         clearInterval(autoSlideInterval);
+    //         moveToNextItem();
+    //         autoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    //     prevButton.addEventListener('click', () => {
+    //         clearInterval(autoSlideInterval);
+    //         moveToPrevItem();
+    //         autoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    // });
 </script>

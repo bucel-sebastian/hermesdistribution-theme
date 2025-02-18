@@ -134,11 +134,11 @@ html {
   padding: 20px 10px;
 }
 
-.categories-slider-items {
-  display: flex;
-  gap: 10px;
+.categories-slider-item {
+  flex: 0 0 16.6666666667%; /* Show 6 cards on desktop */
+  box-sizing: border-box;
+  padding: 10px 5px;
 }
-
 .categories-slider-item a {
   text-decoration: none;
   color: var(--black-primary);
@@ -684,12 +684,6 @@ html {
   transition: transform 0.5s ease-in-out;
 }
 
-.categories-slider-item {
-  flex: 0 0 16.6666666667%; /* Show 6 cards on desktop */
-  box-sizing: border-box;
-  /* Removed padding */
-}
-
 .categories-slider-item-card {
   text-align: center;
 }
@@ -699,22 +693,6 @@ html {
   height: auto;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .categories-slider-item {
-    flex: 0 0 25%; /* Show 4 cards on tablets */
-  }
-}
-@media (max-width: 768px) {
-  .categories-slider-item {
-    flex: 0 0 33.3333333333%; /* Show 3 cards on smaller tablets */
-  }
-}
-@media (max-width: 480px) {
-  .categories-slider-item {
-    flex: 0 0 50%; /* Show 2 cards on mobile */
-  }
-}
 /* Slider Controls */
 .slider-controls {
   gap: 10px;
@@ -723,7 +701,6 @@ html {
   justify-content: space-between;
   pointer-events: none; /* Allow clicks to pass through to the slider */
 }
-
 .slider-controls button {
   pointer-events: all; /* Enable clicks on buttons */
   background: rgba(0, 0, 0, 0.5);
@@ -740,12 +717,14 @@ html {
   font-size: 18px;
   transition: 0.3s ease;
 }
-
 .slider-controls button:hover {
   background: var(--accent-secondary);
 }
+.slider-controls button:disabled {
+  opacity: 0.2;
+}
 
-.filter-widget-title {
+.slider-controls button .filter-widget-title {
   margin-bottom: 6px;
 }
 
