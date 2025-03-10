@@ -15,6 +15,23 @@
                     <p>Livrare gratuită în județul Constanța</p>
                 </div>
             </div>
+            <div class="header-top-container-mobile">
+                <div class="header-top-slider">
+                    <div class="header-top-slider-item">
+                        <a href="mailto: ">
+                            office@hermesdistribution.ro
+                        </a>
+                    </div>
+                    <div class="header-top-slider-item">
+                        <a href="tel: ">
+                            +40 770 12 34 56
+                        </a>
+                    </div>
+                    <div class="header-top-slider-item">
+                        <p>Livrare gratuită în județul Constanța</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="header-bottom">
@@ -56,6 +73,14 @@
                             }
                             ?>
                         </a>
+                    </div>
+
+                    <div class="header-mobile-menu-button-container">
+                        <button class="header-mobile-menu-button ">
+                            <div class="header-mobile-menu-button-bar header-mobile-menu-button-bar-1"></div>
+                            <div class="header-mobile-menu-button-bar header-mobile-menu-button-bar-2"></div>
+                            <div class="header-mobile-menu-button-bar header-mobile-menu-button-bar-3"></div>
+                        </button>
                     </div>
                 </div>
                 <div class=" header-bottom-lower-row">

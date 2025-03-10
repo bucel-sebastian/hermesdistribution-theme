@@ -17,15 +17,50 @@
       width: 100%;
     }
   }
-}
-@media only screen and (max-width: 768px) {
+  .header-bottom {
+    padding: 0;
+  }
+  .header-search-container,
+  .header-shop-links-container,
+  .header-bottom-lower-row,
+  .header-top-container {
+    display: none;
+  }
+  .header-bottom-upper-row {
+    padding: 5px 0;
+    justify-content: space-between;
+  }
+  .header-logo-container {
+    width: max-content;
+  }
+  .header-mobile-menu-button-container {
+    display: block;
+  }
+  .header-top-container-mobile {
+    display: block;
+  }
+
+  .product-hero {
+    flex-direction: column;
+  }
+  .product-image-container,
+  .product-summary-container {
+    width: 100%;
+  }
   .categories-slider-item {
     flex: 0 0 calc(100% / 2);
   }
-
-  .products-gallery-list {
+  .products-gallery-list,
+  .product-page-content .products-gallery-list {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .woocommerce-breadcrumb {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 768px) {
 }
 @media only screen and (max-width: 480px) {
 }

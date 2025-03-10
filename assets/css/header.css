@@ -281,4 +281,49 @@
 }
 .header-search-container button {
   display: none;
+}
+
+.header-mobile-menu-button-container {
+  display: none;
+}
+
+.header-mobile-menu-button-bar {
+  background: var(--white);
+  width: 20px;
+  height: 2px;
+  transform-origin: center;
+  transition: 0.2s ease;
+}
+
+.header-mobile-menu-button {
+  border-radius: 100%;
+  background: var(--accent-primary);
+  transition: 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: none;
+  outline: none;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  cursor: pointer;
+}
+.header-mobile-menu-button:hover {
+  background: var(--accent-secondary);
+}
+.header-mobile-menu-button.is-opened .header-mobile-menu-button-bar-1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.header-mobile-menu-button.is-opened .header-mobile-menu-button-bar-2 {
+  opacity: 0;
+}
+.header-mobile-menu-button.is-opened .header-mobile-menu-button-bar-3 {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.header-top-container-mobile {
+  display: none;
 }/*# sourceMappingURL=header.css.map */
