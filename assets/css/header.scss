@@ -359,4 +359,18 @@
 
 .header-top-container-mobile {
   display: none;
+  width: 100%;
+  overflow: hidden;
+}
+
+.header-top-slider-items{
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  transition: 0.3s ease;
+}
+
+.header-top-slider-item{
+  width: calc(100vw - 40px);
+  text-align: center;
 }

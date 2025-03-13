@@ -17,21 +17,51 @@
             </div>
             <div class="header-top-container-mobile">
                 <div class="header-top-slider">
-                    <div class="header-top-slider-item">
-                        <a href="mailto: ">
-                            office@hermesdistribution.ro
-                        </a>
-                    </div>
-                    <div class="header-top-slider-item">
-                        <a href="tel: ">
-                            +40 770 12 34 56
-                        </a>
-                    </div>
-                    <div class="header-top-slider-item">
-                        <p>Livrare gratuită în județul Constanța</p>
+                    <div class="header-top-slider-items">
+                        <div class="header-top-slider-item">
+                            <a href="mailto: office@hermesdistribution.ro">
+                                office@hermesdistribution.ro
+                            </a>
+                        </div>
+                        <div class="header-top-slider-item">
+                            <a href="tel: ">
+                                +40 770 12 34 56
+                            </a>
+                        </div>
+                        <div class="header-top-slider-item">
+                            <p>Livrare gratuită în județul Constanța</p>
+                        </div>
+                        <div class="header-top-slider-item">
+                            <a href="mailto: office@hermesdistribution.ro">
+                                office@hermesdistribution.ro
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                const headerTopSliderItems = document.querySelector('.header-top-slider-items');
+                let headerTopSliderIndex = 0;
+                let headerTopSliderItem = document.querySelectorAll('.header-top-slider-item');
+                let headerTopSliderItemsCount = headerTopSliderItem.length;
+
+                setInterval(() => {
+                    headerTopSliderIndex++;
+                    headerTopSliderItems.style.transform = `translateX(calc(-${headerTopSliderIndex} * (100vw - 40px)))`;
+                    if (headerTopSliderIndex + 1 === headerTopSliderItemsCount) {
+                        setTimeout(() => {
+                            headerTopSliderItems.style.transition = `none`;
+                            headerTopSliderItems.style.transform = `translateX(0)`;
+                            setTimeout(() => {
+                                headerTopSliderItems.style.transition = `0.3s ease`;
+                            }, 50);
+                            headerTopSliderIndex = 0;
+                        }, 500);
+                    }
+                },
+                3000);
+            </script>
         </div>
     </div>
     <div class="header-bottom">
@@ -51,7 +81,7 @@
                                 <button type="submit" value="<?php echo esc_attr_x('Search', 'submit button', 'woocommerce'); ?>"><?php echo esc_html_x('Search', 'submit button', 'woocommerce'); ?></button>
                                 <input type="hidden" name="post_type" value="product" />
                             </form>
-                            <div class="header-search-suggestions" id="search-suggestions" style="display:none;"></div> <!-- Container pentru sugestii -->
+                            <div class="header-search-suggestions" id="search-suggestions" style="display:none;"></div>
                         </div>
                     </div>
 

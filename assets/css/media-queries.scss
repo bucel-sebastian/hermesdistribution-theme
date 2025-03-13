@@ -59,8 +59,27 @@
     flex-wrap: wrap;
     font-size: 12px;
   }
+
+  .footer-primary-row{
+    flex-direction: column;
+    gap: 50px;
+  }
+  .footer-primary-col{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .menu-footer-primary-menu-container,
+  .menu-utils-menu-container{
+    text-align: center;
+  }
+  .footer-copyrights{
+    flex-direction: column;
+  }
 }
 @media only screen and (max-width: 768px) {
+
 }
 @media only screen and (max-width: 480px) {
+
 }
