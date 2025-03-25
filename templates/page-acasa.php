@@ -26,31 +26,33 @@
                 Categoriile noastre de produse
             </h3>
             <div class="slider-controls">
-                <button class="slider-controls-prev">&#10094;</button> <!-- Previous button -->
-                <button class="slider-controls-next">&#10095;</button> <!-- Next button -->
+                <button class="slider-controls-prev" id="categories-slider-control-prev">&#10094;</button> <!-- Previous button -->
+                <button class="slider-controls-next" id="categories-slider-control-next">&#10095;</button> <!-- Next button -->
             </div>
         </div>
         <div class="categories-slider-container">
-            <div class="categories-slider">
-                <div class="categories-slider-items">
 
-                    <?php
-                    $categories = get_terms([
-                        'taxonomy' => 'product_cat',
-                        'hide_empty' => false,
-                        'parent' => 0
-                    ]);
-                    // echo print_r($categories);
-                    $default_image = wc_placeholder_img_src('full');
+            <div class="splide">
+                <div class="splide__track">
+                    <div class="splide__list">
+                        <?php
+                        $categories = get_terms([
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => false,
+                            'parent' => 0
+                        ]);
+    
+                        $default_image = wc_placeholder_img_src('full');
 
-                    foreach ($categories as $category) {
-                        $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
-                        $image_url = $thumbnail_id
-                            ? wp_get_attachment_image_src($thumbnail_id, 'full')[0]
-                            : $default_image;
-                        $category_link = get_term_link($category);
-
-                    ?>
+                        foreach ($categories as $category) {
+                            $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
+                            $image_url = $thumbnail_id
+                                ? wp_get_attachment_image_src($thumbnail_id, 'full')[0]
+                                : $default_image;
+                            $category_link = get_term_link($category);
+    
+                        ?>
+                        <li class="splide__slide">
                         <div class="categories-slider-item">
                             <a href="<?php echo $category_link ?>">
                                 <div class="categories-slider-item-card">
@@ -63,12 +65,19 @@
                                 </div>
                             </a>
                         </div>
-                    <?php
-                    }
-                    ?>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="categories-slider">
+                <div class="categories-slider-items">
+
                 </div>
 
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -157,100 +166,232 @@
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const slider = document.querySelector('.categories-slider-items');
-        const items = document.querySelectorAll('.categories-slider-item');
-        const totalItems = items.length;
-        let currentIndex = 0;
-        let isDragging = false;
-        let startPosX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        const cardsToShow = 6; // Number of cards to show at once (desktop)
 
-        // Next and Previous Buttons
-        const nextButton = document.querySelector('.slider-controls .slider-controls-next');
-        const prevButton = document.querySelector('.slider-controls .slider-controls-prev');
+document.addEventListener( 'DOMContentLoaded', function() {
+    let categoriesSlider = new Splide( '.splide', {
+        type: 'loop',
+        perPage: 6,
+        breakpoints: {
+            1024: {
+                perPage: 4,
+            },
+            768: {
+                perPage: 2
+            },
+        },
+        gap: 10,
+        padding: {
+            top: 0,
+            bottom: 10
+        },
+        perMove: 1,
+        autoplay: true,
+        arrows: false,
+        pagination: false,
+        autoHeight: true
+    } );
+    categoriesSlider.mount();
 
-        // Update slider position
-        function updateSliderPosition() {
-            const offset = -currentIndex * (100 / cardsToShow);
-            slider.style.transform = `translateX(${offset}%)`;
-        }
-
-        // Move to next item
-        function moveToNextItem() {
-            if (currentIndex < totalItems - cardsToShow) {
-                currentIndex++;
-                updateSliderPosition();
-            }
-        }
-
-        // Move to previous item
-        function moveToPrevItem() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSliderPosition();
-            }
-        }
-
-        // Auto-move slider
-        let autoSlideInterval = setInterval(moveToNextItem, 3000);
-
-        // Pause auto-slide on hover
-        slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-        slider.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
-
-        // Touch and Drag Controls
-        slider.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startPosX = e.touches[0].clientX;
-            prevTranslate = -currentIndex * (100 / cardsToShow);
-        });
-
-        slider.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                const currentPosX = e.touches[0].clientX;
-                const diffX = currentPosX - startPosX;
-                currentTranslate = prevTranslate + (diffX / slider.offsetWidth) * 100;
-
-                // Prevent dragging beyond the first or last card
-                const maxTranslate = 0;
-                const minTranslate = -((totalItems - cardsToShow) * (100 / cardsToShow));
-                currentTranslate = Math.min(maxTranslate, Math.max(minTranslate, currentTranslate));
-
-                slider.style.transform = `translateX(${currentTranslate}%)`;
-            }
-        });
-
-        slider.addEventListener('touchend', () => {
-            if (isDragging) {
-                isDragging = false;
-                const movedBy = currentTranslate - prevTranslate;
-
-                // Snap to the nearest card
-                if (movedBy < -10 && currentIndex < totalItems - cardsToShow) {
-                    currentIndex++;
-                } else if (movedBy > 10 && currentIndex > 0) {
-                    currentIndex--;
-                }
-
-                updateSliderPosition();
-            }
-        });
-
-        // Click Controls
-        nextButton.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            moveToNextItem();
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
-        prevButton.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            moveToPrevItem();
-            autoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
+    let categoriesSliderNextButton = document.getElementById('categories-slider-control-next');
+    categoriesSliderNextButton.addEventListener('click', () => {
+        categoriesSlider.go('+');
     });
+
+    let categoriesSliderPrevButton = document.getElementById('categories-slider-control-prev');
+    categoriesSliderPrevButton.addEventListener('click', () => {
+        categoriesSlider.go('-');
+    });
+  } );
+
+
+    //     const updateSliderPosition = () => {
+    //         categoriesSlider.style.transform = `translateX(calc((-100% / ${categoriesItemsToShow}) * ${categoryIndex}))`;
+
+    //         if (categoryIndex === 0) {
+    //             $("#categories-slider-control-prev").attr('disabled', true);
+    //             $("#categories-slider-control-next").attr('disabled', false);
+    //         } else if (categoryIndex >= categoriesTotalItems - categoriesItemsToShow) {
+    //             $("#categories-slider-control-prev").attr('disabled', false);
+    //             $("#categories-slider-control-next").attr('disabled', true);
+    //         } else {
+    //             $("#categories-slider-control-prev").attr('disabled', false);
+    //             $("#categories-slider-control-next").attr('disabled', false);
+    //         }
+    //     }
+
+    //     const moveToNextItem = () => {
+    //         if (categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     const moveToPrevItem = () => {
+    //         if (categoryIndex > 0) {
+    //             categoryIndex--;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     let categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //     $("#categories-slider-control-prev").on('click', function(e) {
+    //         e.preventDefault();
+    //         clearInterval(categoriesAutoSlideInterval);
+    //         moveToPrevItem();
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    //     $("#categories-slider-control-next").on('click', function(e) {
+    //         e.preventDefault();
+    //         clearInterval(categoriesAutoSlideInterval);
+    //         moveToNextItem();
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+
+    //     // Touch and Drag Controls
+    //     categoriesSlider.addEventListener('touchstart', touchStart);
+    //     categoriesSlider.addEventListener('touchend', touchEnd);
+    //     categoriesSlider.addEventListener('touchmove', touchMove);
+
+    //     function touchStart(event) {
+    //         isDragging = true;
+    //         startPosX = event.touches[0].clientX;
+    //         prevTranslate = currentTranslate;
+    //         categoriesSlider.classList.add('grabbing');
+    //     }
+
+    //     function touchEnd() {
+    //         isDragging = false;
+    //         categoriesSlider.classList.remove('grabbing');
+    //         clearInterval(categoriesAutoSlideInterval);
+
+    //         const movedBy = currentTranslate - prevTranslate;
+
+    //         if (movedBy < -100 && categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //         }
+
+    //         if (movedBy > 100 && categoryIndex > 0) {
+    //             categoryIndex--;
+    //         }
+
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //         updateSliderPosition();
+    //     }
+
+    //     function touchMove(event) {
+    //         if (isDragging) {
+    //             const currentPosition = event.touches[0].clientX;
+    //             currentTranslate = prevTranslate + currentPosition - startPosX;
+    //             categoriesSlider.style.transform = `translateX(${currentTranslate}px)`;
+    //         }
+    //     }
+
+    //     // Initial update to set the correct state of the buttons
+    //     updateSliderPosition();
+
+    //     $(window).resize(function() {
+    //         let categoriesItemsToShow = getCategoriesItemsToShow();
+    //         updateSliderPosition();
+
+    //     });
+    // });
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const slider = document.querySelector('.categories-slider-items');
+    //     const items = document.querySelectorAll('.categories-slider-item');
+    //     const totalItems = items.length;
+    //     let categoryIndex = 0;
+    // let isDragging = false;
+    // let startPosX = 0;
+    // let currentTranslate = 0;
+    // let prevTranslate = 0;
+    //     const categoriesItemsToShow = 6; // Number of cards to show at once (desktop)
+
+    //     // Next and Previous Buttons
+    //     const nextButton = document.querySelector('.slider-controls .slider-controls-next');
+    //     const prevButton = document.querySelector('.slider-controls .slider-controls-prev');
+
+    //     // Update slider position
+    //     function updateSliderPosition() {
+    //         const offset = -categoryIndex * (100 / categoriesItemsToShow);
+    //         slider.style.transform = `translateX(${offset}%)`;
+    //     }
+
+    //     // Move to next item
+    //     function moveToNextItem() {
+    //         if (categoryIndex < totalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     // Move to previous item
+    //     function moveToPrevItem() {
+    //         if (categoryIndex > 0) {
+    //             categoryIndex--;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     // Auto-move slider
+    //     let autoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //     // Pause auto-slide on hover
+    // slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    // slider.addEventListener('mouseleave', () => {
+    //     autoSlideInterval = setInterval(moveToNextItem, 3000);
+    // });
+
+    // // Touch and Drag Controls
+    // slider.addEventListener('touchstart', (e) => {
+    //     isDragging = true;
+    //     startPosX = e.touches[0].clientX;
+    //     prevTranslate = -categoryIndex * (100 / categoriesItemsToShow);
+    // });
+
+    // slider.addEventListener('touchmove', (e) => {
+    //     if (isDragging) {
+    //         const currentPosX = e.touches[0].clientX;
+    //         const diffX = currentPosX - startPosX;
+    //         currentTranslate = prevTranslate + (diffX / slider.offsetWidth) * 100;
+
+    //         // Prevent dragging beyond the first or last card
+    //         const maxTranslate = 0;
+    //         const minTranslate = -((totalItems - cardsToShow) * (100 / cardsToShow));
+    //         currentTranslate = Math.min(maxTranslate, Math.max(minTranslate, currentTranslate));
+
+    //         slider.style.transform = `translateX(${currentTranslate}%)`;
+    //     }
+    // });
+
+    // slider.addEventListener('touchend', () => {
+    //     if (isDragging) {
+    //         isDragging = false;
+    //         const movedBy = currentTranslate - prevTranslate;
+
+    //         // Snap to the nearest card
+    //         if (movedBy < -10 && categoryIndex < totalItems - cardsToShow) {
+    //             categoryIndex++;
+    //         } else if (movedBy > 10 && categoryIndex > 0) {
+    //             categoryIndex--;
+    //         }
+
+    //         updateSliderPosition();
+    //     }
+    // });
+
+    //     // Click Controls
+    //     nextButton.addEventListener('click', () => {
+    //         clearInterval(autoSlideInterval);
+    //         moveToNextItem();
+    //         autoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    //     prevButton.addEventListener('click', () => {
+    //         clearInterval(autoSlideInterval);
+    //         moveToPrevItem();
+    //         autoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    // });
 </script>

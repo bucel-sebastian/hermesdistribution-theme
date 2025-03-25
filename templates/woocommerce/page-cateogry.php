@@ -40,7 +40,7 @@ $products = new WP_Query([
             <br />
             <?php
             if ($products->have_posts()) {
-            ?><ul class="products-gallery-list"><?php
+            ?><ul class="products-gallery-list products-gallery-list-alt"><?php
                                                 while ($products->have_posts()) {
                                                     $products->the_post();
                                                     wc_get_template_part('content', 'product');

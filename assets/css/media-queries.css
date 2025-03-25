@@ -1,1 +1,153 @@
-/*# sourceMappingURL=media-queries.css.map */
+@media only screen and (max-width: 1024px) {
+  .categories-slider-item {
+    flex: 0 0 25%;
+  }
+  .products-gallery-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .our-values-container {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .our-values-container .our-values-item {
+    width: 100%;
+  }
+  .header-bottom {
+    padding: 0;
+  }
+  .header-search-container,
+  .header-shop-links-container,
+  .header-bottom-lower-row,
+  .header-top-container {
+    display: none;
+  }
+  .header-bottom-upper-row {
+    padding: 5px 0;
+    justify-content: space-between;
+  }
+  .header-logo-container {
+    width: max-content;
+  }
+  .header-mobile-menu-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    gap: 25px;
+  }
+  .header-top-container-mobile {
+    display: block;
+  }
+  .product-hero {
+    flex-direction: column;
+  }
+  .product-image-container,
+  .product-summary-container {
+    width: 100%;
+  }
+  .categories-slider-item {
+    flex: 0 0 50%;
+  }
+  .products-gallery-list,
+  .product-page-content .products-gallery-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .woocommerce-breadcrumb {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .footer-primary-row {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .footer-primary-col {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .menu-footer-primary-menu-container,
+  .menu-utils-menu-container {
+    text-align: center;
+  }
+  .footer-copyrights {
+    flex-direction: column;
+  }
+  .woocommerce-shop-container {
+    flex-direction: column;
+  }
+  .woocommerce-shop-container .shop-sidebar {
+    max-width: 100%;
+    width: 100%;
+  }
+  .woocommerce-shop-container .shop-main {
+    max-width: 100%;
+    width: 100%;
+  }
+  .cart-page-content-container {
+    flex-direction: column;
+  }
+  .cart-page-cart-container {
+    max-width: 100%;
+    width: 100%;
+  }
+  .cart-page-cart-container .product-thumbnail img {
+    height: 37px;
+    width: 37px;
+  }
+  .cart-page-cart-container .product-name a,
+  .cart-page-cart-container .product-name p {
+    font-size: 14px;
+  }
+  .cart-page-cart-collaterals {
+    max-width: 100%;
+    width: 100%;
+  }
+  .checkout-page-form-content {
+    flex-direction: column;
+  }
+  .checkout-page-form-content .col2-set {
+    width: 100%;
+  }
+  .checkout-page-order-review-container {
+    max-width: 100%;
+    width: 100%;
+  }
+  .woocommerce-checkout-review-order-table {
+    width: 100%;
+  }
+  .woocommerce-customer-details .woocommerce-columns {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .woocommerce-customer-details .woocommerce-columns .woocommerce-column {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .products-gallery-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products-gallery-list.products-gallery-list-alt {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .woocommerce-thankyou-order-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  .woocommerce-thankyou-order-received {
+    font-size: 24px;
+  }
+  .home-hero-slider .slider-item-content h2 {
+    font-size: 34px;
+    margin-right: 50px;
+  }
+  .header-logo-container a {
+    height: 75%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .home-hero-slider .slider-item-content h2 {
+    font-size: 24px;
+    margin-right: 20px;
+  }
+}/*# sourceMappingURL=media-queries.css.map */
