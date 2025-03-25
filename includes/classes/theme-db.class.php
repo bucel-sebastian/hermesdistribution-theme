@@ -44,6 +44,8 @@ class HermesThemeDatabase
 
     public function create_tables()
     {
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        
         foreach ($this->db_theme_tables as $db_theme_table) {
             maybe_create_table($db_theme_table['name'], $db_theme_table['sql']);
         }

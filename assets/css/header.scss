@@ -34,7 +34,6 @@
   width: 100%;
   position: relative;
   margin: 0 auto;
-  padding: 0 10px;
 }
 
 .header-bottom {
@@ -248,56 +247,6 @@
   }
 }
 
-.header-search {
-  position: relative;
-}
-
-.header-search-suggestions {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 100;
-  border: 1px solid var(--gray-300);
-  border-radius: 8px;
-  width: 100%;
-  margin-top: 3px;
-  background: var(--white);
-  overflow: hidden;
-
-  ul {
-    list-style: none;
-    max-height: 350px;
-    overflow: auto;
-
-    li {
-      width: 100%;
-      border-bottom: 1px solid var(--gray-200);
-      transition: 0.2s ease;
-
-      &:last-of-type {
-        border-bottom: none;
-      }
-
-      &:hover {
-        background: var(--gray-100);
-      }
-
-      a {
-        display: block;
-        width: 100%;
-        text-decoration: none;
-        padding: 8px 10px;
-        color: var(--accent-primary);
-        transition: 0.2s ease;
-
-        &:hover {
-          color: var(--accent-secondary);
-        }
-      }
-    }
-  }
-}
-
 .header-search-container {
   .search-field {
     outline: none;
@@ -310,67 +259,4 @@
   button {
     display: none;
   }
-}
-
-.header-mobile-menu-button-container {
-  display: none;
-}
-
-.header-mobile-menu-button-bar {
-  background: var(--white);
-  width: 20px;
-  height: 2px;
-  transform-origin: center;
-  transition: 0.2s ease;
-}
-
-.header-mobile-menu-button {
-  border-radius: 100%;
-  background: var(--accent-primary);
-  transition: 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  border: none;
-  outline: none;
-  width: 35px;
-  height: 35px;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  cursor: pointer;
-
-  &:hover {
-    background: var(--accent-secondary);
-  }
-
-  &.is-opened {
-    .header-mobile-menu-button-bar-1 {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .header-mobile-menu-button-bar-2 {
-      opacity: 0;
-    }
-    .header-mobile-menu-button-bar-3 {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-  }
-}
-
-.header-top-container-mobile {
-  display: none;
-  width: 100%;
-  overflow: hidden;
-}
-
-.header-top-slider-items{
-  width: max-content;
-  display: flex;
-  flex-direction: row;
-  transition: 0.3s ease;
-}
-
-.header-top-slider-item{
-  width: calc(100vw - 40px);
-  text-align: center;
 }

@@ -29,7 +29,11 @@
     width: max-content;
   }
   .header-mobile-menu-button-container {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    gap: 25px;
   }
   .header-top-container-mobile {
     display: block;
@@ -67,5 +71,83 @@
   }
   .footer-copyrights {
     flex-direction: column;
+  }
+  .woocommerce-shop-container {
+    flex-direction: column;
+  }
+  .woocommerce-shop-container .shop-sidebar {
+    max-width: 100%;
+    width: 100%;
+  }
+  .woocommerce-shop-container .shop-main {
+    max-width: 100%;
+    width: 100%;
+  }
+  .cart-page-content-container {
+    flex-direction: column;
+  }
+  .cart-page-cart-container {
+    max-width: 100%;
+    width: 100%;
+  }
+  .cart-page-cart-container .product-thumbnail img {
+    height: 37px;
+    width: 37px;
+  }
+  .cart-page-cart-container .product-name a,
+  .cart-page-cart-container .product-name p {
+    font-size: 14px;
+  }
+  .cart-page-cart-collaterals {
+    max-width: 100%;
+    width: 100%;
+  }
+  .checkout-page-form-content {
+    flex-direction: column;
+  }
+  .checkout-page-form-content .col2-set {
+    width: 100%;
+  }
+  .checkout-page-order-review-container {
+    max-width: 100%;
+    width: 100%;
+  }
+  .woocommerce-checkout-review-order-table {
+    width: 100%;
+  }
+  .woocommerce-customer-details .woocommerce-columns {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .woocommerce-customer-details .woocommerce-columns .woocommerce-column {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .products-gallery-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products-gallery-list.products-gallery-list-alt {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .woocommerce-thankyou-order-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  .woocommerce-thankyou-order-received {
+    font-size: 24px;
+  }
+  .home-hero-slider .slider-item-content h2 {
+    font-size: 34px;
+    margin-right: 50px;
+  }
+  .header-logo-container a {
+    height: 75%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .home-hero-slider .slider-item-content h2 {
+    font-size: 24px;
+    margin-right: 20px;
   }
 }/*# sourceMappingURL=media-queries.css.map */

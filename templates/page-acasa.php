@@ -31,26 +31,28 @@
             </div>
         </div>
         <div class="categories-slider-container">
-            <div class="categories-slider">
-                <div class="categories-slider-items">
 
-                    <?php
-                    $categories = get_terms([
-                        'taxonomy' => 'product_cat',
-                        'hide_empty' => false,
-                        'parent' => 0
-                    ]);
-                    // echo print_r($categories);
-                    $default_image = wc_placeholder_img_src('full');
+            <div class="splide">
+                <div class="splide__track">
+                    <div class="splide__list">
+                        <?php
+                        $categories = get_terms([
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => false,
+                            'parent' => 0
+                        ]);
+    
+                        $default_image = wc_placeholder_img_src('full');
 
-                    foreach ($categories as $category) {
-                        $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
-                        $image_url = $thumbnail_id
-                            ? wp_get_attachment_image_src($thumbnail_id, 'full')[0]
-                            : $default_image;
-                        $category_link = get_term_link($category);
-
-                    ?>
+                        foreach ($categories as $category) {
+                            $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
+                            $image_url = $thumbnail_id
+                                ? wp_get_attachment_image_src($thumbnail_id, 'full')[0]
+                                : $default_image;
+                            $category_link = get_term_link($category);
+    
+                        ?>
+                        <li class="splide__slide">
                         <div class="categories-slider-item">
                             <a href="<?php echo $category_link ?>">
                                 <div class="categories-slider-item-card">
@@ -63,12 +65,19 @@
                                 </div>
                             </a>
                         </div>
-                    <?php
-                    }
-                    ?>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="categories-slider">
+                <div class="categories-slider-items">
+
                 </div>
 
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -157,121 +166,137 @@
 </section>
 
 <script>
-    jQuery(document).ready(function($) {
-        let categoryIndex = 0;
-        const categoriesSlider = document.querySelector('.categories-slider-items');
-        const categoriesItems = document.querySelectorAll('.categories-slider-item');
-        const categoriesTotalItems = categoriesItems.length;
-        let categoriesItemsToShow = getCategoriesItemsToShow();
 
-        let isDragging = false;
-        let startPosX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
+document.addEventListener( 'DOMContentLoaded', function() {
+    let categoriesSlider = new Splide( '.splide', {
+        type: 'loop',
+        perPage: 6,
+        breakpoints: {
+            1024: {
+                perPage: 4,
+            },
+            768: {
+                perPage: 2
+            },
+        },
+        gap: 10,
+        padding: {
+            top: 0,
+            bottom: 10
+        },
+        perMove: 1,
+        autoplay: true,
+        arrows: false,
+        pagination: false,
+        autoHeight: true
+    } );
+    categoriesSlider.mount();
 
-        function getCategoriesItemsToShow() {
-            if (window.innerWidth < 769) {
-                return 2;
-            } else if (window.innerWidth < 1025) {
-                return 4;
-            } else {
-                return 6;
-            }
-        }
-
-        const updateSliderPosition = () => {
-            categoriesSlider.style.transform = `translateX(calc((-100% / ${categoriesItemsToShow}) * ${categoryIndex}))`;
-
-            if (categoryIndex === 0) {
-                $("#categories-slider-control-prev").attr('disabled', true);
-                $("#categories-slider-control-next").attr('disabled', false);
-            } else if (categoryIndex >= categoriesTotalItems - categoriesItemsToShow) {
-                $("#categories-slider-control-prev").attr('disabled', false);
-                $("#categories-slider-control-next").attr('disabled', true);
-            } else {
-                $("#categories-slider-control-prev").attr('disabled', false);
-                $("#categories-slider-control-next").attr('disabled', false);
-            }
-        }
-
-        const moveToNextItem = () => {
-            if (categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
-                categoryIndex++;
-                updateSliderPosition();
-            }
-        }
-
-        const moveToPrevItem = () => {
-            if (categoryIndex > 0) {
-                categoryIndex--;
-                updateSliderPosition();
-            }
-        }
-
-        let categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
-
-        $("#categories-slider-control-prev").on('click', function(e) {
-            e.preventDefault();
-            clearInterval(categoriesAutoSlideInterval);
-            moveToPrevItem();
-            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
-        $("#categories-slider-control-next").on('click', function(e) {
-            e.preventDefault();
-            clearInterval(categoriesAutoSlideInterval);
-            moveToNextItem();
-            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
-        });
-
-        // Touch and Drag Controls
-        categoriesSlider.addEventListener('touchstart', touchStart);
-        categoriesSlider.addEventListener('touchend', touchEnd);
-        categoriesSlider.addEventListener('touchmove', touchMove);
-
-        function touchStart(event) {
-            isDragging = true;
-            startPosX = event.touches[0].clientX;
-            prevTranslate = currentTranslate;
-            categoriesSlider.classList.add('grabbing');
-        }
-
-        function touchEnd() {
-            isDragging = false;
-            categoriesSlider.classList.remove('grabbing');
-            clearInterval(categoriesAutoSlideInterval);
-
-            const movedBy = currentTranslate - prevTranslate;
-
-            if (movedBy < -100 && categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
-                categoryIndex++;
-            }
-
-            if (movedBy > 100 && categoryIndex > 0) {
-                categoryIndex--;
-            }
-
-            categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
-
-            updateSliderPosition();
-        }
-
-        function touchMove(event) {
-            if (isDragging) {
-                const currentPosition = event.touches[0].clientX;
-                currentTranslate = prevTranslate + currentPosition - startPosX;
-                categoriesSlider.style.transform = `translateX(${currentTranslate}px)`;
-            }
-        }
-
-        // Initial update to set the correct state of the buttons
-        updateSliderPosition();
-
-        $(window).resize(function() {
-            let categoriesItemsToShow = getCategoriesItemsToShow();
-            updateSliderPosition();
-
-        });
+    let categoriesSliderNextButton = document.getElementById('categories-slider-control-next');
+    categoriesSliderNextButton.addEventListener('click', () => {
+        categoriesSlider.go('+');
     });
+
+    let categoriesSliderPrevButton = document.getElementById('categories-slider-control-prev');
+    categoriesSliderPrevButton.addEventListener('click', () => {
+        categoriesSlider.go('-');
+    });
+  } );
+
+
+    //     const updateSliderPosition = () => {
+    //         categoriesSlider.style.transform = `translateX(calc((-100% / ${categoriesItemsToShow}) * ${categoryIndex}))`;
+
+    //         if (categoryIndex === 0) {
+    //             $("#categories-slider-control-prev").attr('disabled', true);
+    //             $("#categories-slider-control-next").attr('disabled', false);
+    //         } else if (categoryIndex >= categoriesTotalItems - categoriesItemsToShow) {
+    //             $("#categories-slider-control-prev").attr('disabled', false);
+    //             $("#categories-slider-control-next").attr('disabled', true);
+    //         } else {
+    //             $("#categories-slider-control-prev").attr('disabled', false);
+    //             $("#categories-slider-control-next").attr('disabled', false);
+    //         }
+    //     }
+
+    //     const moveToNextItem = () => {
+    //         if (categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     const moveToPrevItem = () => {
+    //         if (categoryIndex > 0) {
+    //             categoryIndex--;
+    //             updateSliderPosition();
+    //         }
+    //     }
+
+    //     let categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //     $("#categories-slider-control-prev").on('click', function(e) {
+    //         e.preventDefault();
+    //         clearInterval(categoriesAutoSlideInterval);
+    //         moveToPrevItem();
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+    //     $("#categories-slider-control-next").on('click', function(e) {
+    //         e.preventDefault();
+    //         clearInterval(categoriesAutoSlideInterval);
+    //         moveToNextItem();
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+    //     });
+
+    //     // Touch and Drag Controls
+    //     categoriesSlider.addEventListener('touchstart', touchStart);
+    //     categoriesSlider.addEventListener('touchend', touchEnd);
+    //     categoriesSlider.addEventListener('touchmove', touchMove);
+
+    //     function touchStart(event) {
+    //         isDragging = true;
+    //         startPosX = event.touches[0].clientX;
+    //         prevTranslate = currentTranslate;
+    //         categoriesSlider.classList.add('grabbing');
+    //     }
+
+    //     function touchEnd() {
+    //         isDragging = false;
+    //         categoriesSlider.classList.remove('grabbing');
+    //         clearInterval(categoriesAutoSlideInterval);
+
+    //         const movedBy = currentTranslate - prevTranslate;
+
+    //         if (movedBy < -100 && categoryIndex < categoriesTotalItems - categoriesItemsToShow) {
+    //             categoryIndex++;
+    //         }
+
+    //         if (movedBy > 100 && categoryIndex > 0) {
+    //             categoryIndex--;
+    //         }
+
+    //         categoriesAutoSlideInterval = setInterval(moveToNextItem, 3000);
+
+    //         updateSliderPosition();
+    //     }
+
+    //     function touchMove(event) {
+    //         if (isDragging) {
+    //             const currentPosition = event.touches[0].clientX;
+    //             currentTranslate = prevTranslate + currentPosition - startPosX;
+    //             categoriesSlider.style.transform = `translateX(${currentTranslate}px)`;
+    //         }
+    //     }
+
+    //     // Initial update to set the correct state of the buttons
+    //     updateSliderPosition();
+
+    //     $(window).resize(function() {
+    //         let categoriesItemsToShow = getCategoriesItemsToShow();
+    //         updateSliderPosition();
+
+    //     });
+    // });
 
     // document.addEventListener('DOMContentLoaded', function() {
     //     const slider = document.querySelector('.categories-slider-items');
