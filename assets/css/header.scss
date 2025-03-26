@@ -1,5 +1,10 @@
 .header {
+  position: sticky;
   width: 100%;
+  top: -29px;
+  left: 0;
+  background: var(--white);
+  z-index: 99999;
 }
 
 .header-top {
@@ -37,8 +42,10 @@
 }
 
 .header-bottom {
-  padding-bottom: 10px;
+  position: sticky;
+  padding: 0 20px 10px;
   border-bottom: 1px solid var(--gray-300);
+  background: var(--white);
 }
 .header-bottom-upper-row {
   display: flex;
@@ -50,7 +57,11 @@
 .header-logo-container {
   width: 25%;
   height: 50px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  transition: 0.2s ease;
 }
 .header-logo-container a {
   display: block;
@@ -98,7 +109,11 @@
       .sub-menu {
         pointer-events: none;
         opacity: 0;
-
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: max-content;
         list-style: none;
         position: absolute;
         padding: 15px 20px;
@@ -129,8 +144,10 @@
     transform: translateY(0px);
   }
 
-  .menu-item:hover .header-categories-container {
-    border-radius: 8px 0 0 8px; // Apply border-radius on hover
+  .menu-item:hover .sub-menu {
+    & + .header-categories-container {
+      border-radius: 8px 8px 0 0; // New border-radius when submenu is visible
+    }
   }
 }
 
@@ -259,4 +276,173 @@
   button {
     display: none;
   }
+}
+
+.header-top-mobile-slider{
+  display: none;
+}
+
+#header-top-splide{
+  .splide_track{
+    padding-bottom: 0;
+  }
+
+  .header-top-splide-item{
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+.header-sticky{
+  position: fixed;
+  top: 29px;
+  right: 0;
+  width: 100%;
+  height: calc(100dvh - 29px);
+  
+ 
+  transition: 0.3s ease;
+  z-index: -1;
+  transform: translateX(100%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  
+  &.is-opened{
+    transform: translateX(0);
+  }
+}
+
+.header-sticky-content{
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+  height: 100%;
+  padding: 80px 20px 20px;
+  pointer-events: all;
+  background: var(--white);
+  border-left: 1px solid var(--gray-300);
+  
+}
+
+.header-mobile-menu-container{
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  pointer-events: all;
+}
+
+.header-mobile-categories-menu,
+.header-mobile-primary-menu{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .menu-item {
+    padding: 5px 15px;
+    text-align: left;
+
+    a {
+      color: var(--nav-link-color);
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s ease;
+
+      &:hover {
+        color: var(--accent-secondary);
+      }
+    }
+
+    .sub-menu {
+      list-style: none;
+      padding: 10px 0px;
+      .menu-item {
+        &::before{
+          content: "•";
+          margin-right: 5px;
+        }
+      }
+    }
+    &:hover .header-categories-container {
+      border-radius: 8px 0 0 8px; // Apply border-radius on hover
+    }
+  }
+}
+
+.header-mobile-menu-button-container{
+  display: none;
+  flex-direction: row;
+  gap: 35px;
+  align-items: center;
+  align-content: center;
+
+  .header-cart-link{
+    display: block;
+    height: max-content;
+    svg{
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+  }
+}
+
+.header-mobile-menu-button{
+  border: none;
+  outline: none;
+  aspect-ratio: 1 / 1;
+  width: 34px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  transition: 0.2s ease;
+
+  &:hover{
+    background: var(--accent-secondary);
+  }
+
+  .header-mobile-menu-button-bar{
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--white);
+    transition: 0.2s ease;
+  }
+  .header-mobile-menu-button-bar-container-1,
+  .header-mobile-menu-button-bar-container-2,
+  .header-mobile-menu-button-bar-container-3{
+    transition: 0.3s ease;
+
+  }
+
+  &.is-opened{
+    .header-mobile-menu-button-bar-2{
+      opacity: 0;
+    }
+
+    .header-mobile-menu-button-bar-container-1{
+      transform: translateY(6px);
+    }
+    .header-mobile-menu-button-bar-container-3{
+      transform: translateY(-6px);
+    }
+    
+    .header-mobile-menu-button-bar-1{
+      transform: rotate(45deg);
+    }
+    .header-mobile-menu-button-bar-3{
+      transform: rotate(-45deg);
+    }
+  }
+
 }

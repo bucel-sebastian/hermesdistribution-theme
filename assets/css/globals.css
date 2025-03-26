@@ -179,7 +179,7 @@ html {
   color: var(--black-primary-hover);
 }
 
-.splide__track {
+.categories-slider-splide .splide__track {
   padding-bottom: 10px;
 }
 

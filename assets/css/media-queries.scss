@@ -18,13 +18,16 @@
     }
   }
   .header-bottom {
-    padding: 0;
+    padding: 0 20px;
   }
   .header-search-container,
   .header-shop-links-container,
   .header-bottom-lower-row,
   .header-top-container {
     display: none;
+  }
+  .header-top-mobile-slider{
+    display: block;
   }
   .header-bottom-upper-row {
     padding: 5px 0;
@@ -35,10 +38,7 @@
   }
   .header-mobile-menu-button-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    gap: 25px;
+    
   }
   .header-top-container-mobile {
     display: block;
@@ -145,6 +145,7 @@
       }
     }
   }
+  
 }
 
 @media only screen and (max-width: 768px) {

@@ -1,11 +1,3 @@
-<?php
-
-$post = get_queried_object();
-if ($post) {
-    $pagetitle = $post->post_title;
-}
-?>
-
 <!-- Hermes Distribution -->
 <!-- Developed By Seqbyte Solutions (seqbyte.com) -->
 <!-- ---- -->
@@ -64,7 +56,6 @@ if ($post) {
                                     }
                                     ?>">
 <meta name="keywords" content="<?php _e("en gros, alimente, dulciuri, alimente de baza", "hermesdistribution"); ?>">
-
 
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo HERMES_FILE_URI . '/assets/img/favicon/apple-touch-icon.png' ?>">
 <link rel="icon" type="image/png" sizes="192x192" href="<?php echo HERMES_FILE_URI . '/assets/img/favicon/android-chrome-192x192.png' ?>">
